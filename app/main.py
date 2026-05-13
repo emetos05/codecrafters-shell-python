@@ -7,7 +7,7 @@ def main():
     # print("$ ", end="")
     user_input: str = input()
     if user_input:
-        print(f"$ {user_input}: command not found")
+        print(f"{user_input}: command not found")
 
 
 if __name__ == "__main__":
