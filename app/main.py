@@ -8,6 +8,8 @@ def main():
     while True:
         print("$ ", end="")
         user_input: str = input()
+        if user_input == "exit":
+            break
         print(f"{user_input}: command not found")
 
 
