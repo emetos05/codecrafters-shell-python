@@ -1,3 +1,4 @@
+import subprocess
 import sys, os
 
 
@@ -8,6 +9,7 @@ def main() -> None:
     shell_builtin: list[str] = ["echo", "exit", "type"]
     sys_path: str | None = os.environ.get("PATH")
     path_list = []
+    executed: bool = False
 
     while True:
         print("$ ", end="")
@@ -15,6 +17,15 @@ def main() -> None:
         input_args: list[str] = user_input.split(" ")
         if sys_path:
             path_list: list[str] = sys_path.split(os.pathsep)
+
+        if user_input:
+            if input_args[0] not in shell_builtin:
+                for path in path_list:
+                    exec_path: str = os.path.join(path, input_args[0])
+                    if os.path.exists(exec_path) and os.access(exec_path, os.X_OK):
+                        subprocess.run(input_args)
+                        executed = True
+                        break
 
         if user_input.startswith("type "):
             if input_args[1] in shell_builtin:
@@ -33,7 +44,8 @@ def main() -> None:
         elif user_input == "exit":
             break
         else:
-            print(f"{user_input}: command not found")
+            if executed is False:
+                print(f"{user_input}: command not found")
 
 
 if __name__ == "__main__":
