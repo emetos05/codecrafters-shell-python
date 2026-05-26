@@ -6,7 +6,7 @@ def main() -> None:
     # TODO: Uncomment the code below to pass the first stage
     # sys.stdout.write("$ ")
     # print("$ ", end="")
-    shell_builtin: list[str] = ["echo", "exit", "type"]
+    shell_builtin: list[str] = ["echo", "exit", "type", "pwd"]
     sys_path: str | None = os.environ.get("PATH")
     path_list = []
     executed: bool = False
@@ -43,6 +43,8 @@ def main() -> None:
             print(user_input[5:])
         elif user_input == "exit":
             break
+        elif user_input == "pwd":
+            print(os.getcwd())
         else:
             if executed is False:
                 print(f"{user_input}: command not found")
