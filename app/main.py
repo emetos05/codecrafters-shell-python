@@ -22,14 +22,13 @@ def main() -> None:
         elif user_input.startswith("echo "):
             print(user_input[5:])
         elif user_input.startswith("cd "):
-            abs_path = input_args[1]
+            my_path = input_args[1]
             try:
-                os.chdir(abs_path)
+                os.chdir(my_path)
             except OSError:
-                print(f"cd: {abs_path}: No such file or directory")
+                print(f"cd: {my_path}: No such file or directory")
         elif user_input == "pwd":
             print(os.getcwd())
-            # continue
         elif user_input.startswith("type "):
             if input_args[1] in shell_builtin:
                 print(f"{input_args[1]} is a shell builtin")
@@ -41,7 +40,6 @@ def main() -> None:
                         break
                 else:
                     print(f"{input_args[1]}: not found")
-                    # continue
         elif input_args[0] not in shell_builtin:
             for path in path_list:
                 exec_path: str = os.path.join(path, input_args[0])
