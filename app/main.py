@@ -24,7 +24,12 @@ def main() -> None:
         elif user_input.startswith("cd "):
             my_path = input_args[1]
             try:
-                os.chdir(my_path)
+                if my_path == "~":
+                    home_dir = os.path.expanduser(my_path)
+                    if home_dir:
+                        os.chdir(home_dir)
+                else:
+                    os.chdir(my_path)
             except OSError:
                 print(f"cd: {my_path}: No such file or directory")
         elif user_input == "pwd":
